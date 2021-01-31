@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="jquery.js"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <scrip src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></scrip>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="todolist.css">
+</head>
+<body>
+    <div id="main">
+        <span class="main-title">todo list</span>
+        <div id="content" id="task-header" class="task-infor">
+            <span v-show="taskData.length==0" id="input-words" class="none-title">请添加任务</span>
+            
+            <div v-for="(task,index) in taskData" v-if="task.isDelete == false" class="task-in" @mouseout="getAway(index)" @mouseover="turnUp(index)" >
+                <form >
+                    <input @keyup.enter="search" @input="search(task,$event)" v-bind:value="task.content" type="text"> 
+                    <button @click="modify(index,task.content)" type="button" :class="'botton'+index" modify class=" bottom-input btn btn-warning">刷新</button>
+                    <button @click="completeTask(index)" type="button" :class="'botton'+index" complete class=" bottom-input btn btn-danger">{{task.isDelete==true?'删除':'完成'}}</button>
+                </form>
+            </div>
+            <div completed v-for="(task,index) in taskData" v-if="task.isDelete == true" class="task-in" @mouseout="getAway(index)" @mouseover="turnUp(index)" >
+                <form >
+                    <input @keyup.enter="search" @input="search(task,$event)" v-bind:value="task.content" type="text"> 
+                    <button @click="modify(index,task.content)" type="button" :class="'botton'+index"   modify class=" bottom-input btn btn-warning">刷新</button>
+                    <button @click="deleteTask(index)" type="button" :class="'botton'+index"  delete class=" bottom-input btn btn-danger">{{task.isDelete==true?'删除':'完成'}}</button>
+                </form>
+            </div>
+            
+        </div>
+        <div id="botton-submit" class="task-input">
+            <form>
+                <input id="to-task" v-model="value" type="text"  autocomplete="off" placeholder="今天做点什么">
+                <button v-on:click="submitTask(value)" type="button" class="botton-input btn btn-info">提交</button>
+            </form>
+        </div>
+        <span id="date" class="main-date">{{date}}</span>
+    </div>
+</body>
+<script src="todolist_vue.js"></script>
+</html>   
